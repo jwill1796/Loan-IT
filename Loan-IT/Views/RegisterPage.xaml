@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:Loan_IT.ViewModels"
+             x:Class="Loan_IT.Views.RegisterPage"
+             Title="RegisterPage">
+
+    <ContentPage.BindingContext>
+        <vm:UserViewModel/>
+    </ContentPage.BindingContext>
+    
+    <VerticalStackLayout>
+        <Label Text="Register" FontSize="Large" FontAttributes="Bold" HorizontalOptions="Center"/>
+        
+        <Entry Placeholder="Username" Text="{Binding Username}"/>
+        <Entry Placeholder="Email" Text="{Binding Email}"/>
+        <Entry Placeholder="Password" IsPassword="True" Text="{Binding Password}"/>
+
+        <Button Text="Register" Command="{Binding RegisterUserCommand}" />
+        <Label Text="{Binding RegistrationMessage}" TextColor="Red" HorizontalOptions="Center"/>
+
+    </VerticalStackLayout>
+</ContentPage>

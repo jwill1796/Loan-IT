@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Loan_IT.Views.MortgageInputPage"
+             Title="MortgageInputPage">
+    <VerticalStackLayout>
+        <Label Text="Mortgage Calculator" FontSize="24" FontAttributes="Bold" />
+
+        <Entry x:Name="CostOfHomeEntry" Placeholder="Cost of Home ($)" Keyboard="Numeric"/>
+        <Entry x:Name="DownPaymentEntry" Placeholder="Down Payment ($)" Keyboard="Numeric"/>
+        <Entry x:Name="InterestRateEntry" Placeholder="Interest Rate (%)" Keyboard="Numeric"/>
+        <Entry x:Name="LoanTermEntry" Placeholder="Loan Term (Years)" Keyboard="Numeric"/>
+        <Entry x:Name="PropertyTaxEntry" Placeholder="Property Tax ($/year)" Keyboard="Numeric"/>
+        <Entry x:Name="HomeInsuranceEntry" Placeholder="Home Insurance ($/year)" Keyboard="Numeric"/>
+        <Entry x:Name="HoaFeesEntry" Placeholder="HOA Fees ($/month)" Keyboard="Numeric"/>
+
+        <Button Text="Calculate and Save" Clicked="OnSaveMortgageClicked"/>
+    </VerticalStackLayout>
+</ContentPage>

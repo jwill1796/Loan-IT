@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Loan_IT.Views.UserInfoPage"
+             Title="User Info">
+    <VerticalStackLayout>
+        <Label Text="User Information" FontSize="24" FontAttributes="Bold" />
+        <Entry x:Name="IncomeEntry" Placeholder="Monthly Income ($)" Keyboard="Numeric"/>
+        <Entry x:Name="DebtEntry" Placeholder="Total Monthly Debt ($)" Keyboard="Numeric"/>
+
+        <Picker x:Name="EmploymentPicker" Title="Employment Status">
+            <Picker.Items>
+                <x:String>Employed</x:String>
+                <x:String>Self-Employed</x:String>
+                <x:String>Unemployed</x:String>
+                <x:String>Retired</x:String>
+            </Picker.Items>
+        </Picker>
+
+        <Entry x:Name="CreditScoreEntry" Placeholder="Credit Score" Keyboard="Numeric"/>
+
+        <Picker x:Name="MaritalPicker" Title="Marital Status">
+            <Picker.Items>
+                <x:String>Single</x:String>
+                <x:String>Married</x:String>
+                <x:String>Divorced</x:String>
+                <x:String>Widowed</x:String>
+            </Picker.Items>
+        </Picker>
+
+        <Button Text="Save Information" Clicked="OnSaveUserInfoClicked"/>
+        
+    </VerticalStackLayout>
+</ContentPage>
