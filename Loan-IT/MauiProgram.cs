@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Maui;
 using Loan_IT.Data;
+using Loan_IT.Views;
 using Loan_IT.ViewModels;
 using System.IO;
 
@@ -22,7 +23,9 @@ namespace Loan_IT
 
             string dbPath = Path.Combine(FileSystem.AppDataDirectory, "loanit.db");
             builder.Services.AddSingleton(new DatabaseService(dbPath));
-
+            builder.Services.AddSingleton<LoginPage>(); // ✅ Make LoginPage the first page
+            builder.Services.AddSingleton<RegisterPage>();
+            builder.Services.AddSingleton<MainPage>();
             builder.Services.AddTransient<ApprovalViewModel>();
             builder.Services.AddSingleton<UserViewModel>(); 
 

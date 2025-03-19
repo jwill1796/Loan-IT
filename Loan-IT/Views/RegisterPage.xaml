@@ -12,9 +12,10 @@
     <VerticalStackLayout>
         <Label Text="Register" FontSize="Large" FontAttributes="Bold" HorizontalOptions="Center"/>
         
-        <Entry Placeholder="Username" Text="{Binding Username}"/>
-        <Entry Placeholder="Email" Text="{Binding Email}"/>
-        <Entry Placeholder="Password" IsPassword="True" Text="{Binding Password}"/>
+        <Entry x:Name="UsernameEntry" Placeholder="Username" Text="{Binding Username}"/>
+        <Entry x:Name="EmailEntry" Placeholder="Email" Text="{Binding Email}"/>
+        <Entry x:Name="PasswordEntry" Placeholder="Password" IsPassword="True" Text="{Binding Password}"/>
+        <Entry x:Name="ConfirmPasswordEntry" Placeholder="Confirm Password" IsPassword="True" Text="{Binding ConfirmPassword}"/>
 
         <Button Text="Register" Command="{Binding RegisterUserCommand}" />
         <Label Text="{Binding RegistrationMessage}" TextColor="Red" HorizontalOptions="Center"/>

@@ -1,12 +1,12 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Loan_IT.Data;
 using Loan_IT.Models;
+using Loan_IT.Views;
 using Microsoft.Maui.Controls;
+using BCrypt.Net;
 
 namespace Loan_IT.ViewModels
 {
@@ -14,11 +14,21 @@ namespace Loan_IT.ViewModels
     {
         private readonly DatabaseService _databaseService;
 
+        public ICommand RegisterUserCommand { get; }
+        public ICommand LoginUserCommand { get; }
+        public ICommand NavigateToRegisterCommand { get; }
         public UserViewModel()
         {
             _databaseService = App.ServiceProvider?.GetService<DatabaseService>();
             RegisterUserCommand = new Command(async () => await RegisterUser());
             LoginUserCommand = new Command(async () => await LoginUser());
+            NavigateToRegisterCommand = new Command(async () =>
+            {
+                if (Application.Current.MainPage is NavigationPage navPage)
+                {
+                    await navPage.PushAsync(new RegisterPage());
+                }
+            });
         }
 
         public UserViewModel(DatabaseService databaseService)
@@ -26,6 +36,13 @@ namespace Loan_IT.ViewModels
             _databaseService = databaseService;
             RegisterUserCommand = new Command(async () => await RegisterUser());
             LoginUserCommand = new Command(async () => await LoginUser());
+            NavigateToRegisterCommand = new Command(async () =>
+            {
+                if (Application.Current.MainPage is NavigationPage navPage)
+                {
+                    await navPage.PushAsync(new RegisterPage());
+                }
+            });
         }
 
         private string _username;
@@ -74,12 +91,10 @@ namespace Loan_IT.ViewModels
         
         private string _loginMessage;
         public string LoginMessage
-        { get => _loginMessage;
+        { 
+            get => _loginMessage;
             set { _loginMessage = value; OnPropertyChanged(); }
         }
-
-        public ICommand RegisterUserCommand { get; }
-        public ICommand LoginUserCommand { get; }
 
         public async Task LoginUser()
         {
@@ -91,14 +106,15 @@ namespace Loan_IT.ViewModels
 
             var user = await _databaseService.GetUserByUsername(Username);
 
-            if (user == null || user.PasswordHash != HashPassword(Password))
+            if (user == null || !BCrypt.Net.BCrypt.Verify(Password, user.PasswordHash))
             {
                 LoginMessage = "Invalid username or password.";
                 return;
             }
 
             LoginMessage = "Login Succesful";
-            await Shell.Current.GoToAsync("//MainPage");
+            ((App)Application.Current).LoadAppShell();
+
         }
 
 
@@ -109,7 +125,7 @@ namespace Loan_IT.ViewModels
                 RegistrationMessage = "Please enter all fields.";
                 return false;
             }
-            var hashedPassword = HashPassword(_password);
+            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(Password);
 
             var user = new Users
             {
@@ -122,21 +138,16 @@ namespace Loan_IT.ViewModels
             if (result > 0)
             {
                 RegistrationMessage = "User registered successfully.";
+                if (Application.Current.MainPage is NavigationPage navPage)
+                {
+                    await navPage.PopAsync();
+                }
                 return true;
             }
             else
             {
                 RegistrationMessage = "User registration failed.";
                 return false;
-            }
-        }
-
-        private string HashPassword(string password)
-        {
-            using (SHA256 sha256 = SHA256.Create())
-            {
-                byte[] hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
-                return Convert.ToBase64String(hashedBytes);
             }
         }
 

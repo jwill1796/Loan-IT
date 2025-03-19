@@ -19,6 +19,6 @@
 
         <Label Text="{Binding LoginMessage}" TextColor="Red" HorizontalOptions="Center"/>
 
-        <Button Text="Register Instead" Clicked="OnRegisterClicked" />
+        <Button Text="Register" Command="{Binding NavigateToRegisterCommand}"/>
     </VerticalStackLayout>
 </ContentPage>

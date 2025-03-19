@@ -15,6 +15,13 @@ namespace Loan_IT
             InitializeComponent();
             ServiceProvider = serviceProvider;
             InitializeDatabase();
+
+            MainPage = new NavigationPage(new LoginPage());
+        }
+
+        public void LoadAppShell()
+        {
+            MainPage = new AppShell();
         }
 
         private async void InitializeDatabase()
@@ -30,9 +37,9 @@ namespace Loan_IT
                 throw new System.Exception("DatabaseService is not registered.");
             }
         }
-        protected override Window CreateWindow(IActivationState? activationState)
-        {
-            return new Window(new AppShell());
-        }
+        //protected override Window CreateWindow(IActivationState? activationState)
+        //{
+        //    return new Window(new AppShell());
+        //}
     }
 }

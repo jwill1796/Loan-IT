@@ -42,7 +42,7 @@ namespace Loan_IT.Views
             await _databaseService.SaveMortgageDetails(mortgage);
             await DisplayAlert("Success", $"Mortgage Saved! Monthly Payment: ${monthlyPayment:F2}", "OK");
 
-            await Shell.Current.GoToAsync("//ApprovalResultPage");
+            await Shell.Current.GoToAsync("ApprovalResultPage");
         }
     }
 }

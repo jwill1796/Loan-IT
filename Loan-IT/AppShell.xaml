@@ -7,15 +7,6 @@
     xmlns:views="clr-namespace:Loan_IT.Views"
     Shell.FlyoutBehavior="Flyout"
     Title="Loan_IT">
-
-    <ShellContent 
-    Title="Login"
-    ContentTemplate="{DataTemplate views:LoginPage}"
-    Route="LoginPage" />
-
-    <ShellContent Title="Register"
-              Route="RegisterPage"
-              ContentTemplate="{DataTemplate views:RegisterPage}" />
     
     <ShellContent
         Title="Home"
