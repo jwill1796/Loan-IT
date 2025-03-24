@@ -23,7 +23,7 @@ namespace Loan_IT
 
             string dbPath = Path.Combine(FileSystem.AppDataDirectory, "loanit.db");
             builder.Services.AddSingleton(new DatabaseService(dbPath));
-            builder.Services.AddSingleton<LoginPage>(); // ✅ Make LoginPage the first page
+            builder.Services.AddSingleton<LoginPage>(); 
             builder.Services.AddSingleton<RegisterPage>();
             builder.Services.AddSingleton<MainPage>();
             builder.Services.AddTransient<ApprovalViewModel>();

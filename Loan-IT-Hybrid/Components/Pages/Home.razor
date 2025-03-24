@@ -1,0 +1,27 @@
+﻿@page "/home"
+@inject SessionService Session
+@inject NavigationManager Navigation
+
+@if (!Session.IsLoggedIn)
+{
+    <p>Please Login First</p>
+    <p>Redirecting...</p>
+}
+else
+{
+    <h1>Hello, world!</h1>
+    <p>Logged in: @Session.IsLoggedIn</p>
+    <p>Email: @Session.LoggedInEmail</p>
+
+    <p>Welcome to your new app.</p>
+}
+
+@code {
+    protected override void OnInitialized()
+    {
+        if (!Session.IsLoggedIn)
+        {
+            Navigation.NavigateTo("/");
+        }
+    }
+}

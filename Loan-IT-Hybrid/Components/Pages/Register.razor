@@ -1,0 +1,74 @@
+﻿@page "/register"
+@using Loan_IT_Hybrid.Services
+@using Loan_IT_Hybrid.Models
+@inject DatabaseService DbService
+@inject NavigationManager Navigation
+
+<h2 class="text-2xl font-bold mb-4 text-primary text-center">Register for LoanIT</h2>
+
+<div class="max-w-md mx-auto bg-white p-6 rounded shadow-md">
+    <EditForm Model="@newUser" OnValidSubmit="HandleRegister">
+        <DataAnnotationsValidator />
+
+        <div class="form-control mb-4">
+            <label class="label">
+                <span class="label-text">Email</span>
+            </label>
+            <InputText class="input input-bordered w-full" @bind-Value="newUser.Email" />
+            <ValidationMessage For="@(() => newUser.Email)" />
+        </div>
+
+        <div class="form-control mb-4">
+            <label class="label">
+                <span class="label-text">Username</span>
+            </label>
+            <InputText class="input input-bordered w-full" @bind-Value="newUser.Username" />
+            <ValidationMessage For="@(() => newUser.Username)" />
+        </div>
+
+        <div class="form-control mb-6">
+            <label class="label">
+                <span class="label-text">Password</span>
+            </label>
+            <InputText type="password" class="input input-bordered w-full" @bind-Value="newUser.PasswordHash" />
+            <ValidationMessage For="@(() => newUser.PasswordHash)" />
+        </div>
+
+        <button class="btn btn-primary w-full" type="submit">Register</button>
+    </EditForm>
+
+    @if (!string.IsNullOrEmpty(message))
+    {
+        <div class="mt-4 text-center text-success">
+            @message
+        </div>
+    }
+</div>
+
+@code {
+    private Users newUser = new Users();
+    private string message = string.Empty;
+
+    private async Task HandleRegister()
+    {
+        try
+        {
+            var existingUser = await DbService.GetUserByEmailAsync(newUser.Email);
+            if (existingUser != null)
+            {
+                message = "User with this email already exists";
+                return;
+            }
+
+            newUser.PasswordHash = BCrypt.Net.BCrypt.HashPassword(newUser.PasswordHash);
+            await DbService.RegisterUserAsync(newUser);
+            message = "Registration successful! Redirecting to login...";
+            await Task.Delay(2000);
+            Navigation.NavigateTo("/");
+        }
+        catch (Exception ex)
+        {
+            message = $"An error occurred: {ex.Message}";
+        }
+    }
+}
